@@ -1,0 +1,26 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install -r ./requirements.txt
+      - name: Lint playbooks
+        run: |
+          yamllint ./playbooks
+          ansible-lint ./playbooks

@@ -1,0 +1,12 @@
+---
+- name: install pyenv
+  hosts: droplets
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: install pyenv
+      include_role:
+        name: install_pyenv
+      vars:
+        pyenv_python_versions: ["3.9.9"]

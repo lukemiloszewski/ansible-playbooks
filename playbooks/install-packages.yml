@@ -1,0 +1,22 @@
+---
+- name: install system packages
+  hosts: droplets
+  become: true
+  gather_facts: false
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+    - name: update packages
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: upgrade packages
+      ansible.builtin.apt:
+        upgrade: dist
+
+    - name: install system packages
+      ansible.builtin.apt:
+        name: "{{ system_packages }}"
+        state: present

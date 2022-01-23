@@ -1,0 +1,44 @@
+---
+- name: install pyenv dependencies
+  ansible.builtin.apt:
+    name: "{{ pyenv_deps }}"
+    state: present
+
+- name: clone pyenv
+  git:
+    repo: "{{ pyenv_repo }}"
+    dest: "{{ pyenv_path }}"
+    version: "{{ pyenv_version }}"
+    accept_hostkey: yes
+
+- name: configure bash
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    insertafter: EOF
+    line: 'eval "$(pyenv init -)"'
+
+- name: configure shell profile
+  ansible.builtin.lineinfile:
+    path: ~/.profile
+    insertafter: EOF
+    line: 'eval "$(pyenv init --path)"'
+
+- name: configure shell profile variables
+  ansible.builtin.lineinfile:
+    path: ~/.profile
+    insertbefore: BOF
+    line: 'export PATH="{{ pyenv_path }}/bin:$PATH"'
+
+- name: install python versions
+  shell: ". ~/.profile && {{ pyenv_path }}/bin/pyenv install $(echo {{ item }}) -v"
+  async: 1200
+  poll: 10
+  args:
+    creates: "{{ pyenv_path }}/versions/{{ item }}"
+  loop: "{{ [pyenv_python_versions] | flatten }}"
+  loop_control:
+    label: '{{ item }}'
+
+- name: rebuild shim binaries
+  shell: ". ~/.profile && {{ pyenv_path }}/bin/pyenv rehash"
+  changed_when: false
