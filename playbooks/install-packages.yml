@@ -20,3 +20,7 @@
       ansible.builtin.apt:
         name: "{{ system_packages }}"
         state: present
+
+    - name: remove packages no longer required
+      ansible.builtin.apt:
+        autoremove: yes
