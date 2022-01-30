@@ -1,5 +1,5 @@
 <h1 align="center">Ansible Playbooks</h1>
-<p align="center">Configure, Deploy and Orchestrate Remote Servers 🚀</p>
+<p align="center">Configure, deploy and orchestrate remote servers 📕</p>
 
 ## Installation
 
