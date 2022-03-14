@@ -25,6 +25,8 @@ Add the IP address of your remote server to the `inventory` file:
 
 ## Usage
 
+> The current playbooks are configured for Ubuntu 20.04
+
 To update and install system packages:
 
 ```shell
@@ -37,4 +39,8 @@ To install pyenv:
 make pyenv
 ```
 
-> The current playbooks are configured for Ubuntu 20.04
+To install docker and docker-compose:
+
+```shell
+make docker
+```

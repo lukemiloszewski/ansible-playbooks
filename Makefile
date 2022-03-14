@@ -10,6 +10,10 @@ pyenv:
 	cd ./playbooks && \
 	ansible-playbook install-pyenv.yml -i ./inventory
 
+docker:
+	cd ./playbooks && \
+	ansible-playbook install-docker.yml -i ./inventory
+
 tasks:
 	ansible-playbook droplet.yml --list-tasks
 
