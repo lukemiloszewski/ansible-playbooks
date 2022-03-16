@@ -26,14 +26,14 @@
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
 
-    - name: Update apt and install docker-ce
+    - name: Install docker-ce
       apt:
         name: docker-ce
         state: latest
         update_cache: true
 
-    - name: Install docker-compose from official github repo
+    - name: Install docker-compose
       get_url:
-        url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
         dest: /usr/local/bin/docker-compose
         mode: u+x,g+x,o+x
